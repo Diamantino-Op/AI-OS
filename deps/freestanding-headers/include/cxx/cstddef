@@ -1,0 +1,11 @@
+#ifndef _CSTDDEF_
+#define _CSTDDEF_
+
+#include <stddef.h>
+
+namespace std {
+    using ::size_t;
+    using ::ptrdiff_t;
+}
+
+#endif // _CSTDDEF_

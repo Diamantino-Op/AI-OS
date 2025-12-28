@@ -1,0 +1,18 @@
+#ifndef _NEW_
+#define _NEW_
+
+#include <cstddef>
+
+namespace std {
+    enum class align_val_t : size_t {};
+}
+
+// Placement new
+inline void* operator new(std::size_t, void* ptr) noexcept { return ptr; }
+inline void* operator new[](std::size_t, void* ptr) noexcept { return ptr; }
+
+// Placement delete (for completeness)
+inline void operator delete(void*, void*) noexcept {}
+inline void operator delete[](void*, void*) noexcept {}
+
+#endif // _NEW_
