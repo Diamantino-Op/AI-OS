@@ -2,33 +2,32 @@
 #include <cstddef>
 
 // Limine protocol requests
-#include "limine.h"
+#include <limine.h>
 
-namespace {
-    // Set the base revision to 2, this is recommended as this is the latest
-    // base revision described by the Limine boot protocol specification.
-    __attribute__((used, section(".requests")))
-    volatile LIMINE_BASE_REVISION(2);
+// Set the base revision to 2, this is recommended as this is the latest
+// base revision described by the Limine boot protocol specification.
+__attribute__((used, section(".requests")))
+LIMINE_BASE_REVISION(2);
 
-    // Request a framebuffer
-    __attribute__((used, section(".requests")))
-    volatile limine_framebuffer_request framebuffer_request = {
-        .id = LIMINE_FRAMEBUFFER_REQUEST,
-        .revision = 0
-    };
+// Request a framebuffer
+__attribute__((used, section(".requests")))
+static volatile limine_framebuffer_request framebuffer_request = {
+    .id = LIMINE_FRAMEBUFFER_REQUEST,
+    .revision = 0,
+    .response = nullptr
+};
 
-    // Halt and catch fire function
-    void hcf() {
-        for (;;) {
-            asm ("hlt");
-        }
+// Halt and catch fire function
+static void hcf() {
+    for (;;) {
+        asm ("hlt");
     }
 }
 
 // The following will be our kernel's entry point.
 extern "C" void _start() {
     // Ensure the bootloader actually understands our base revision
-    if (LIMINE_BASE_REVISION_SUPPORTED == false) {
+    if (!LIMINE_BASE_REVISION_SUPPORTED) {
         hcf();
     }
 

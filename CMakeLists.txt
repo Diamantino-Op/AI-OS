@@ -46,6 +46,7 @@ set(KERNEL_LINK_FLAGS
 
 # Define paths
 set(LIMINE_DIR ${CMAKE_SOURCE_DIR}/deps/limine)
+set(LIMINE_PROTOCOL_DIR ${CMAKE_SOURCE_DIR}/deps/limine-protocol)
 set(FREESTANDING_HEADERS_DIR ${CMAKE_SOURCE_DIR}/deps/freestanding-headers)
 
 # Kernel source files
@@ -64,7 +65,7 @@ target_link_options(Kernel.elf PRIVATE ${KERNEL_LINK_FLAGS})
 target_include_directories(Kernel.elf PRIVATE
     ${FREESTANDING_HEADERS_DIR}/include/c
     ${FREESTANDING_HEADERS_DIR}/include/cxx
-    ${LIMINE_DIR}
+    ${LIMINE_PROTOCOL_DIR}/include
 )
 
 # Set the output name
